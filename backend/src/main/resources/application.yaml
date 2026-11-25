@@ -1,0 +1,41 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: kaizen-pulse-backend
+  threads:
+    virtual:
+      enabled: true # Java 25 Virtual Threads aktif
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/kaizen_db
+    username: kaizen_user
+    password: kaizen_password
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update # Entity sınıflarından tabloları otomatik oluşturur
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: kaizen-telemetry-group
+      auto-offset-reset: earliest
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: kaizen_user
+    password: kaizen_password
+
+groq:
+  api:
+    key: ${GROQ_API_KEY}
+    url: https://api.groq.com/openai/v1/chat/completions
+    model: openai/gpt-oss-20b
